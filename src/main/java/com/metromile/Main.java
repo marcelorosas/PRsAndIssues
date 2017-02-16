@@ -11,13 +11,29 @@ public class Main {
     public static void main(String[] args) {
         try {
 
+            String path = "yourUrl";
+
+            if(args.length > 0) {
+                if (args[0] != null) {
+                    path += "&state=" + args[0];
+                }
+            }
+
+            if (args.length > 1) {
+                path += "&start=" + args[1];
+            }
+
+            if (args.length > 2) {
+                path += "&role.1=AUTHOR&username.1=" + args[2];
+            }
+
             Client client = Client.create();
 
             WebResource webResource = client
-                    .resource("yourUrl");
+                    .resource(path);
 
             ClientResponse response = webResource.accept("application/json")
-                    .header("Authorization","I won't tell you")
+                    .header("Authorization","I won't tell you.")
                     .get(ClientResponse.class);
 
             if (response.getStatus() != 200) {
@@ -39,6 +55,5 @@ public class Main {
             e.printStackTrace();
 
         }
-
     }
 }
